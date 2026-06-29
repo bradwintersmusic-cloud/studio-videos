@@ -30,6 +30,7 @@
       padding: 48px 28px 100px;
     }
 
+    /* ── Header ── */
     .page-header {
       max-width: 920px;
       margin: 0 auto 52px;
@@ -59,13 +60,124 @@
       font-size: 11px;
       color: var(--muted);
       letter-spacing: 0.04em;
+      margin-bottom: 24px;
     }
 
-    .content {
-      max-width: 920px;
-      margin: 0 auto;
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
     }
 
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 180px;
+      max-width: 280px;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 13px;
+      height: 13px;
+      fill: none;
+      stroke: var(--muted);
+      stroke-width: 2;
+      stroke-linecap: round;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      padding: 6px 10px 6px 30px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: var(--accent); }
+
+    .filter-select {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 28px 6px 10px;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238f8e9d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 9px center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .filter-select:focus,
+    .filter-select.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .filter-select option {
+      background: var(--surface2);
+      color: var(--text);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .result-count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* ── Content ── */
+    .content { max-width: 920px; margin: 0 auto; }
+
+    /* ── Playlist sections ── */
+    .playlist-section { margin-bottom: 44px; }
+
+    .playlist-heading {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .playlist-heading .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── Grid ── */
     .video-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -74,13 +186,16 @@
 
     @media (max-width: 720px) {
       .video-grid { grid-template-columns: repeat(2, 1fr); }
+      .result-count { margin-left: 0; width: 100%; }
     }
 
     @media (max-width: 480px) {
       .video-grid { grid-template-columns: 1fr; }
       body { padding: 32px 16px 80px; }
+      .search-wrap { max-width: 100%; }
     }
 
+    /* ── Card ── */
     .video-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -88,6 +203,8 @@
       overflow: hidden;
       cursor: pointer;
       transition: border-color 0.15s, background 0.15s;
+      display: flex;
+      flex-direction: column;
     }
 
     .video-card:hover {
@@ -101,6 +218,7 @@
       aspect-ratio: 16 / 9;
       overflow: hidden;
       background: var(--surface2);
+      flex-shrink: 0;
     }
 
     .thumbnail-wrap img {
@@ -111,9 +229,7 @@
       transition: transform 0.2s;
     }
 
-    .video-card:hover .thumbnail-wrap img {
-      transform: scale(1.03);
-    }
+    .video-card:hover .thumbnail-wrap img { transform: scale(1.03); }
 
     .play-icon {
       position: absolute;
@@ -145,8 +261,35 @@
       margin-left: 2px;
     }
 
+    /* Duration badge on thumbnail */
+    .duration-badge {
+      position: absolute;
+      bottom: 7px;
+      right: 8px;
+      background: rgba(11, 11, 15, 0.82);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--text);
+      padding: 1px 5px;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+    }
+
+    /* Card body */
     .card-body {
-      padding: 12px 14px 14px;
+      padding: 11px 13px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+    }
+
+    .card-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .card-category {
@@ -155,7 +298,13 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 5px;
+    }
+
+    .card-instructor {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
     }
 
     .card-title {
@@ -163,7 +312,6 @@
       font-weight: 500;
       color: var(--text);
       line-height: 1.4;
-      margin-bottom: 4px;
     }
 
     .card-desc {
@@ -172,6 +320,42 @@
       line-height: 1.45;
     }
 
+    /* Tags */
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 2px;
+    }
+
+    .tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 6px;
+      white-space: nowrap;
+    }
+
+    .video-card:hover .tag {
+      border-color: rgba(200, 168, 107, 0.25);
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 72px 0;
+      color: var(--muted);
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    /* ── Modal ── */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -183,9 +367,7 @@
       padding: 24px;
     }
 
-    .modal-overlay.open {
-      display: flex;
-    }
+    .modal-overlay.open { display: flex; }
 
     .modal {
       position: relative;
@@ -214,6 +396,12 @@
       gap: 3px;
     }
 
+    .modal-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .modal-category {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
@@ -222,8 +410,22 @@
       color: var(--accent);
     }
 
+    .modal-instructor {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .modal-duration {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--blue);
+      letter-spacing: 0.04em;
+    }
+
     .modal-title {
-      font-size: 14px;
+      font-size: 18px;
       font-weight: 500;
       color: var(--text);
     }
@@ -241,10 +443,7 @@
       transition: border-color 0.12s, color 0.12s;
     }
 
-    .modal-close:hover {
-      border-color: var(--muted);
-      color: var(--text);
-    }
+    .modal-close:hover { border-color: var(--muted); color: var(--text); }
 
     .modal-video {
       position: relative;
@@ -268,17 +467,47 @@
     <div class="wordmark">Belmont University &middot; AET</div>
     <h1>Tutorial Library</h1>
     <div class="meta">Studio walkthroughs, booking guides, and equipment how-tos</div>
+
+    <div class="controls">
+      <div class="search-wrap">
+        <svg viewBox="0 0 16 16"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/></svg>
+        <input class="search-input" id="searchInput" type="text" placeholder="Search videos...">
+      </div>
+
+      <select class="filter-select" id="categoryFilter">
+        <option value="">All Categories</option>
+        <option value="General">General</option>
+        <option value="Booking">Booking</option>
+        <option value="Studio Basics">Studio Basics</option>
+        <option value="Equipment">Equipment</option>
+        <option value="Class Materials">Class Materials</option>
+        <option value="Troubleshooting">Troubleshooting</option>
+      </select>
+
+      <select class="filter-select" id="instructorFilter">
+        <option value="">All Instructors</option>
+      </select>
+
+      <select class="filter-select" id="playlistFilter">
+        <option value="">All Playlists</option>
+      </select>
+
+      <span class="result-count" id="resultCount"></span>
+    </div>
   </header>
 
-  <main class="content">
-    <div class="video-grid" id="videoGrid"></div>
-  </main>
+  <main class="content" id="mainContent"></main>
+  <div class="empty-state" id="emptyState">No videos match your filters.</div>
 
   <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="modal">
+    <div class="modal">
       <div class="modal-header">
         <div class="modal-title-group">
-          <span class="modal-category" id="modalCategory"></span>
+          <div class="modal-eyebrow">
+            <span class="modal-category" id="modalCategory"></span>
+            <span class="modal-instructor" id="modalInstructor"></span>
+            <span class="modal-duration" id="modalDuration"></span>
+          </div>
           <span class="modal-title" id="modalTitle"></span>
         </div>
         <button class="modal-close" id="modalClose">&#x2715;</button>
@@ -290,54 +519,263 @@
   </div>
 
   <script>
+    // ── VIDEO DATA ────────────────────────────────────────────────────────────
+    //
+    // Required fields:  id, category, title
+    // Optional fields:  desc, instructor, playlist, duration, tags
+    //
+    // id         — YouTube video ID (part after ?v= in the URL)
+    // category   — General | Booking | Studio Basics | Equipment | Class Materials | Troubleshooting
+    // title      — Display title
+    // desc       — Short description (optional)
+    // instructor — Instructor name (optional)
+    // playlist   — Playlist/series name (optional)
+    // duration   — Video length as a string, e.g. "4:32" (optional)
+    // tags       — Comma-separated keywords, e.g. "pro tools, session setup, routing" (optional)
+    //              Tags are included in search results.
+    //
     var videos = [
       {
         id: "Vq2xt2D3e3E",
         category: "Booking",
         title: "How to Book a Studio Session",
-        desc: "Step-by-step walkthrough of the booking system from login to confirmation."
-      },
-      {
-        id: "JiNKlhspdkE",
-        category: "Studio Basics",
-        title: "Studio A Walkthrough",
-        desc: "Tour of Columbia Studio A — console, patchbay, and signal flow overview."
-      },
-      {
-        id: "zGCak1W_7M0",
-        category: "Studio Basics",
-        title: "Setting Up a Pro Tools Session",
-        desc: "Session template setup, I/O configuration, and routing from scratch."
-      },
-      {
-        id: "mVH5EoNMBs4",
-        category: "Equipment",
-        title: "Microphone Locker Overview",
-        desc: "What is available, how to check mics out, and proper handling procedures."
+        desc: "Step-by-step walkthrough of the booking system from login to confirmation.",
+        instructor: "Brad Winters",
+        playlist: "Booking System Guide",
+        duration: "5:14",
+        tags: "booking, login, confirmation, how to book"
       },
       {
         id: "9E6b3swbnWg",
         category: "Booking",
         title: "Cancelling and Rescheduling",
-        desc: "How to cancel a session within policy and avoid a no-show strike."
+        desc: "How to cancel a session within policy and avoid a no-show strike.",
+        instructor: "Brad Winters",
+        playlist: "Booking System Guide",
+        duration: "3:40",
+        tags: "cancel, reschedule, no-show, strike, policy"
+      },
+      {
+        id: "JiNKlhspdkE",
+        category: "Studio Basics",
+        title: "Studio A Walkthrough",
+        desc: "Tour of Columbia Studio A — console, patchbay, and signal flow overview.",
+        instructor: "Brad Winters",
+        playlist: "Studio Orientations",
+        duration: "8:22",
+        tags: "studio a, console, patchbay, signal flow, orientation"
+      },
+      {
+        id: "zGCak1W_7M0",
+        category: "Studio Basics",
+        title: "Setting Up a Pro Tools Session",
+        desc: "Session template setup, I/O configuration, and routing from scratch.",
+        instructor: "Brad Winters",
+        playlist: "Studio Orientations",
+        duration: "6:55",
+        tags: "pro tools, session, template, io, routing, setup"
+      },
+      {
+        id: "mVH5EoNMBs4",
+        category: "Equipment",
+        title: "Microphone Locker Overview",
+        desc: "What is available, how to check mics out, and proper handling procedures.",
+        instructor: "Brad Winters",
+        duration: "4:10",
+        tags: "microphone, mic locker, checkout, handling, equipment"
       },
       {
         id: "FJMq7Q5bSRk",
         category: "Equipment",
         title: "Patchbay Basics",
-        desc: "Understanding the patchbay layout and how to route signal in Studio B."
+        desc: "Understanding the patchbay layout and how to route signal in Studio B.",
+        instructor: "Brad Winters",
+        duration: "7:03",
+        tags: "patchbay, routing, signal, studio b, normalling"
       }
     ];
 
-    var grid = document.getElementById("videoGrid");
+    // ── STATE ─────────────────────────────────────────────────────────────────
+    var activeSearch = "";
+    var activeCategory = "";
+    var activeInstructor = "";
+    var activePlaylist = "";
+
+    // ── BOOTSTRAP DROPDOWNS ───────────────────────────────────────────────────
+    var instructorSet = {};
+    var playlistSet = {};
+
+    for (var i = 0; i < videos.length; i++) {
+      var v = videos[i];
+      if (v.instructor && v.instructor !== "") { instructorSet[v.instructor] = true; }
+      if (v.playlist && v.playlist !== "") { playlistSet[v.playlist] = true; }
+    }
+
+    var instructorFilter = document.getElementById("instructorFilter");
+    var instructorKeys = Object.keys(instructorSet).sort();
+    for (var i = 0; i < instructorKeys.length; i++) {
+      var opt = document.createElement("option");
+      opt.value = instructorKeys[i];
+      opt.textContent = instructorKeys[i];
+      instructorFilter.appendChild(opt);
+    }
+
+    var playlistFilter = document.getElementById("playlistFilter");
+    var playlistKeys = Object.keys(playlistSet).sort();
+    for (var i = 0; i < playlistKeys.length; i++) {
+      var opt = document.createElement("option");
+      opt.value = playlistKeys[i];
+      opt.textContent = playlistKeys[i];
+      playlistFilter.appendChild(opt);
+    }
+
+    if (instructorKeys.length === 0) { instructorFilter.style.display = "none"; }
+    if (playlistKeys.length === 0) { playlistFilter.style.display = "none"; }
+
+    // ── FILTER ────────────────────────────────────────────────────────────────
+    function matchesFilters(v) {
+      if (activeCategory && v.category !== activeCategory) { return false; }
+      if (activeInstructor && v.instructor !== activeInstructor) { return false; }
+      if (activePlaylist && v.playlist !== activePlaylist) { return false; }
+      if (activeSearch) {
+        var q = activeSearch.toLowerCase();
+        var inTitle = v.title.toLowerCase().indexOf(q) !== -1;
+        var inDesc = v.desc ? v.desc.toLowerCase().indexOf(q) !== -1 : false;
+        var inTags = v.tags ? v.tags.toLowerCase().indexOf(q) !== -1 : false;
+        if (!inTitle && !inDesc && !inTags) { return false; }
+      }
+      return true;
+    }
+
+    // ── RENDER ────────────────────────────────────────────────────────────────
+    var mainContent = document.getElementById("mainContent");
+    var emptyState = document.getElementById("emptyState");
+    var resultCount = document.getElementById("resultCount");
+
+    function render() {
+      mainContent.innerHTML = "";
+      var filtered = [];
+      for (var i = 0; i < videos.length; i++) {
+        if (matchesFilters(videos[i])) { filtered.push(videos[i]); }
+      }
+
+      resultCount.textContent = filtered.length + " video" + (filtered.length !== 1 ? "s" : "");
+
+      if (filtered.length === 0) {
+        emptyState.style.display = "block";
+        return;
+      }
+      emptyState.style.display = "none";
+
+      if (!activePlaylist) {
+        var groups = {};
+        var noPlaylist = [];
+
+        for (var i = 0; i < filtered.length; i++) {
+          var v = filtered[i];
+          if (v.playlist && v.playlist !== "") {
+            if (!groups[v.playlist]) { groups[v.playlist] = []; }
+            groups[v.playlist].push(v);
+          } else {
+            noPlaylist.push(v);
+          }
+        }
+
+        var groupNames = Object.keys(groups).sort();
+        for (var g = 0; g < groupNames.length; g++) {
+          renderSection(groupNames[g], groups[groupNames[g]]);
+        }
+        if (noPlaylist.length > 0) {
+          renderSection(groupNames.length > 0 ? "General" : "", noPlaylist);
+        }
+      } else {
+        renderSection("", filtered);
+      }
+    }
+
+    function renderSection(label, videoList) {
+      var section = document.createElement("div");
+      section.className = "playlist-section";
+
+      if (label) {
+        var heading = document.createElement("div");
+        heading.className = "playlist-heading";
+        heading.innerHTML = '<div class="dot"></div>' + label;
+        section.appendChild(heading);
+      }
+
+      var grid = document.createElement("div");
+      grid.className = "video-grid";
+
+      for (var i = 0; i < videoList.length; i++) {
+        grid.appendChild(buildCard(videoList[i]));
+      }
+
+      section.appendChild(grid);
+      mainContent.appendChild(section);
+    }
+
+    function buildCard(v) {
+      var thumb = "https://img.youtube.com/vi/" + v.id + "/mqdefault.jpg";
+      var card = document.createElement("div");
+      card.className = "video-card";
+
+      var instructorHtml = (v.instructor && v.instructor !== "")
+        ? '<span class="card-instructor">' + v.instructor + '</span>' : "";
+
+      var descHtml = (v.desc && v.desc !== "")
+        ? '<div class="card-desc">' + v.desc + '</div>' : "";
+
+      var durationHtml = (v.duration && v.duration !== "")
+        ? '<div class="duration-badge">' + v.duration + '</div>' : "";
+
+      var tagsHtml = "";
+      if (v.tags && v.tags !== "") {
+        var tagList = v.tags.split(",");
+        var pills = "";
+        for (var t = 0; t < tagList.length; t++) {
+          var tag = tagList[t].trim();
+          if (tag) { pills += '<span class="tag">' + tag + '</span>'; }
+        }
+        if (pills) { tagsHtml = '<div class="card-tags">' + pills + '</div>'; }
+      }
+
+      card.innerHTML =
+        '<div class="thumbnail-wrap">' +
+          '<img src="' + thumb + '" alt="' + v.title + '">' +
+          '<div class="play-icon"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>' +
+          durationHtml +
+        '</div>' +
+        '<div class="card-body">' +
+          '<div class="card-meta-row">' +
+            '<span class="card-category">' + v.category + '</span>' +
+            instructorHtml +
+          '</div>' +
+          '<div class="card-title">' + v.title + '</div>' +
+          descHtml +
+          tagsHtml +
+        '</div>';
+
+      card.addEventListener("click", function(vid) {
+        return function() { openModal(vid); };
+      }(v));
+
+      return card;
+    }
+
+    // ── MODAL ─────────────────────────────────────────────────────────────────
     var overlay = document.getElementById("modalOverlay");
     var iframe = document.getElementById("modalIframe");
     var modalCat = document.getElementById("modalCategory");
+    var modalInstructor = document.getElementById("modalInstructor");
+    var modalDuration = document.getElementById("modalDuration");
     var modalTtl = document.getElementById("modalTitle");
     var closeBtn = document.getElementById("modalClose");
 
     function openModal(v) {
       modalCat.textContent = v.category;
+      modalInstructor.textContent = (v.instructor && v.instructor !== "") ? v.instructor : "";
+      modalDuration.textContent = (v.duration && v.duration !== "") ? v.duration : "";
       modalTtl.textContent = v.title;
       iframe.src = "https://www.youtube.com/embed/" + v.id + "?autoplay=1&rel=0";
       overlay.classList.add("open");
@@ -350,35 +788,39 @@
       document.body.style.overflow = "";
     }
 
-    for (var i = 0; i < videos.length; i++) {
-      (function(v) {
-        var thumb = "https://img.youtube.com/vi/" + v.id + "/mqdefault.jpg";
-        var card = document.createElement("div");
-        card.className = "video-card";
-        card.innerHTML =
-          '<div class="thumbnail-wrap">' +
-            '<img src="' + thumb + '" alt="' + v.title + '">' +
-            '<div class="play-icon"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>' +
-          '</div>' +
-          '<div class="card-body">' +
-            '<div class="card-category">' + v.category + '</div>' +
-            '<div class="card-title">' + v.title + '</div>' +
-            '<div class="card-desc">' + v.desc + '</div>' +
-          '</div>';
-        card.addEventListener("click", function() { openModal(v); });
-        grid.appendChild(card);
-      })(videos[i]);
-    }
-
     closeBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", function(e) { if (e.target === overlay) { closeModal(); } });
+    document.addEventListener("keydown", function(e) { if (e.key === "Escape") { closeModal(); } });
 
-    overlay.addEventListener("click", function(e) {
-      if (e.target === overlay) { closeModal(); }
+    // ── CONTROL EVENTS ────────────────────────────────────────────────────────
+    var searchInput = document.getElementById("searchInput");
+    var categoryFilterEl = document.getElementById("categoryFilter");
+
+    searchInput.addEventListener("input", function() {
+      activeSearch = this.value.trim();
+      render();
     });
 
-    document.addEventListener("keydown", function(e) {
-      if (e.key === "Escape") { closeModal(); }
+    categoryFilterEl.addEventListener("change", function() {
+      activeCategory = this.value;
+      this.className = "filter-select" + (this.value ? " active" : "");
+      render();
     });
+
+    instructorFilter.addEventListener("change", function() {
+      activeInstructor = this.value;
+      this.className = "filter-select" + (this.value ? " active" : "");
+      render();
+    });
+
+    playlistFilter.addEventListener("change", function() {
+      activePlaylist = this.value;
+      this.className = "filter-select" + (this.value ? " active" : "");
+      render();
+    });
+
+    // ── INIT ──────────────────────────────────────────────────────────────────
+    render();
   </script>
 
 </body>
