@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial Library — Belmont AET</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0b0b0f;
+      --surface:   #13131b;
+      --surface2:  #1b1b26;
+      --border:    #252533;
+      --accent:    #c8a86b;
+      --accent-bg: rgba(200, 168, 107, 0.10);
+      --text:      #e6e2d9;
+      --muted:     #8f8e9d;
+      --blue:      #5b9cf6;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 48px 28px 100px;
+    }
+
+    .page-header {
+      max-width: 920px;
+      margin: 0 auto 52px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .wordmark {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .content {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 720px) {
+      .video-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .video-grid { grid-template-columns: 1fr; }
+      body { padding: 32px 16px 80px; }
+    }
+
+    .video-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .video-card:hover {
+      border-color: var(--accent);
+      background: var(--surface2);
+    }
+
+    .thumbnail-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--surface2);
+    }
+
+    .thumbnail-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s;
+    }
+
+    .video-card:hover .thumbnail-wrap img {
+      transform: scale(1.03);
+    }
+
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      width: 44px;
+      height: 44px;
+      background: rgba(11, 11, 15, 0.75);
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.15s, transform 0.15s;
+      pointer-events: none;
+    }
+
+    .video-card:hover .play-icon {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .play-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--accent);
+      margin-left: 2px;
+    }
+
+    .card-body {
+      padding: 12px 14px 14px;
+    }
+
+    .card-category {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 11, 15, 0.88);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      position: relative;
+      width: 100%;
+      max-width: 860px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+
+    .modal-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .modal-category {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .modal-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .modal-close {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      padding: 4px 8px;
+      flex-shrink: 0;
+      transition: border-color 0.12s, color 0.12s;
+    }
+
+    .modal-close:hover {
+      border-color: var(--muted);
+      color: var(--text);
+    }
+
+    .modal-video {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .modal-video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <div class="wordmark">Belmont University &middot; AET</div>
+    <h1>Tutorial Library</h1>
+    <div class="meta">Studio walkthroughs, booking guides, and equipment how-tos</div>
+  </header>
+
+  <main class="content">
+    <div class="video-grid" id="videoGrid"></div>
+  </main>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category" id="modalCategory"></span>
+          <span class="modal-title" id="modalTitle"></span>
+        </div>
+        <button class="modal-close" id="modalClose">&#x2715;</button>
+      </div>
+      <div class="modal-video">
+        <iframe id="modalIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var videos = [
+      {
+        id: "Vq2xt2D3e3E",
+        category: "Booking",
+        title: "How to Book a Studio Session",
+        desc: "Step-by-step walkthrough of the booking system from login to confirmation."
+      },
+      {
+        id: "JiNKlhspdkE",
+        category: "Studio Basics",
+        title: "Studio A Walkthrough",
+        desc: "Tour of Columbia Studio A — console, patchbay, and signal flow overview."
+      },
+      {
+        id: "zGCak1W_7M0",
+        category: "Studio Basics",
+        title: "Setting Up a Pro Tools Session",
+        desc: "Session template setup, I/O configuration, and routing from scratch."
+      },
+      {
+        id: "mVH5EoNMBs4",
+        category: "Equipment",
+        title: "Microphone Locker Overview",
+        desc: "What is available, how to check mics out, and proper handling procedures."
+      },
+      {
+        id: "9E6b3swbnWg",
+        category: "Booking",
+        title: "Cancelling and Rescheduling",
+        desc: "How to cancel a session within policy and avoid a no-show strike."
+      },
+      {
+        id: "FJMq7Q5bSRk",
+        category: "Equipment",
+        title: "Patchbay Basics",
+        desc: "Understanding the patchbay layout and how to route signal in Studio B."
+      }
+    ];
+
+    var grid = document.getElementById("videoGrid");
+    var overlay = document.getElementById("modalOverlay");
+    var iframe = document.getElementById("modalIframe");
+    var modalCat = document.getElementById("modalCategory");
+    var modalTtl = document.getElementById("modalTitle");
+    var closeBtn = document.getElementById("modalClose");
+
+    function openModal(v) {
+      modalCat.textContent = v.category;
+      modalTtl.textContent = v.title;
+      iframe.src = "https://www.youtube.com/embed/" + v.id + "?autoplay=1&rel=0";
+      overlay.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      overlay.classList.remove("open");
+      iframe.src = "";
+      document.body.style.overflow = "";
+    }
+
+    for (var i = 0; i < videos.length; i++) {
+      (function(v) {
+        var thumb = "https://img.youtube.com/vi/" + v.id + "/mqdefault.jpg";
+        var card = document.createElement("div");
+        card.className = "video-card";
+        card.innerHTML =
+          '<div class="thumbnail-wrap">' +
+            '<img src="' + thumb + '" alt="' + v.title + '">' +
+            '<div class="play-icon"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>' +
+          '</div>' +
+          '<div class="card-body">' +
+            '<div class="card-category">' + v.category + '</div>' +
+            '<div class="card-title">' + v.title + '</div>' +
+            '<div class="card-desc">' + v.desc + '</div>' +
+          '</div>';
+        card.addEventListener("click", function() { openModal(v); });
+        grid.appendChild(card);
+      })(videos[i]);
+    }
+
+    closeBtn.addEventListener("click", closeModal);
+
+    overlay.addEventListener("click", function(e) {
+      if (e.target === overlay) { closeModal(); }
+    });
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") { closeModal(); }
+    });
+  </script>
+
+</body>
+</html>
