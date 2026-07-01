@@ -1,0 +1,96 @@
+{
+  "playlists": [
+    {
+      "name": "Studio Assistant Guides",
+      "pinned": true
+    },
+    {
+      "name": "Booking System Guide",
+      "pinned": false
+    },
+    {
+      "name": "Studio Orientations",
+      "pinned": false
+    }
+  ],
+  "videos": [
+    {
+      "id": "l3wIEGadAFE",
+      "active": true,
+      "pinned": false,
+      "category": "Booking",
+      "title": "How to LOGIN to Studio Assistant",
+      "desc": "Step-by-step walkthrough showing how to login using your email and how to set up a passkey for future logins.",
+      "instructor": "Brad Winters",
+      "playlist": "Studio Assistant Guides",
+      "duration": "2:31",
+      "tags": "booking, login, passkey, email",
+      "classes": []
+    },
+    {
+      "id": "wXTvd1DkHFw",
+      "active": true,
+      "pinned": false,
+      "category": "General",
+      "title": "Tape Workflows",
+      "desc": "In this episode of Soyuz Spotlights, we sit down with Michael Janas, Chair of Audio Engineering Technology at Belmont University, to discuss his analog recording curriculum.",
+      "instructor": "Michael Janas",
+      "playlist": "",
+      "duration": "14:21",
+      "tags": "tape, gear, recording, analog",
+      "classes": []
+    },
+    {
+      "id": "gH_C2T-izRY",
+      "active": true,
+      "pinned": false,
+      "category": "General",
+      "title": "Curb College Facilities",
+      "desc": "Artists. Filmmakers. Songwriters. Screenwriters. Journalists. Directors. Entertainers. Every creative professional needs a creative space for their craft.",
+      "instructor": "Dave Warburton",
+      "playlist": "",
+      "duration": "4:46",
+      "tags": "cemb, aet, mot, tour",
+      "classes": []
+    },
+    {
+      "id": "GSLbTROcC2s",
+      "active": true,
+      "pinned": false,
+      "category": "General",
+      "title": "Vintage King's Inside Look At Belmont University's Johnson Theater",
+      "desc": "Opened in 2015 as part of the Mike Curb College of Entertainment Music Business, Belmont University's Johnson Theater is a 250-seat, multi-purpose space.",
+      "instructor": "Dave Warburton",
+      "playlist": "",
+      "duration": "6:38",
+      "tags": "cemb, mot, tour",
+      "classes": []
+    },
+    {
+      "id": "sQHEvbTn1qE",
+      "active": true,
+      "pinned": false,
+      "category": "General",
+      "title": "Vintage King's Inside Look At Belmont University's Robert E. Mulloy Studios",
+      "desc": "Located in the heart of Nashville's Belmont University, Robert E. Mulloy Studios offers students a world-class studio space to learn the ropes and hone their craft.",
+      "instructor": "Michael Janas",
+      "playlist": "",
+      "duration": "8:18",
+      "tags": "rem, recording, ssl origin, gear, equipment",
+      "classes": []
+    },
+    {
+      "id": "IAHd0ODkfjk",
+      "active": true,
+      "pinned": false,
+      "category": "General",
+      "title": "Welcome to the Mike Curb College of Entertainment & Music Business",
+      "desc": "Curb College boasts an impressive faculty of academic scholars and authors, entrepreneurs, songwriters, producers, journalists, filmmakers, sound and recording engineers and entertainment executives.",
+      "instructor": "Brittany Schaffer",
+      "playlist": "",
+      "duration": "3:14",
+      "tags": "cemb, aet, mot, sng, mbu, mds, tour",
+      "classes": []
+    }
+  ]
+}

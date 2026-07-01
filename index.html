@@ -111,7 +111,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 4px;
-      color: var(--accent);
+      color: var(--muted);
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
       letter-spacing: 0.06em;
@@ -128,10 +128,7 @@
     }
 
     .filter-select:focus,
-    .filter-select.active {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    .filter-select.active { border-color: var(--accent); color: var(--accent); }
 
     .filter-select option {
       background: var(--surface2);
@@ -155,14 +152,8 @@
       display: none;
     }
 
-    .clear-btn.visible {
-      display: block;
-    }
-
-    .clear-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    .clear-btn.visible { display: block; }
+    .clear-btn:hover { border-color: var(--accent); color: var(--accent); }
 
     .result-count {
       font-family: 'IBM Plex Mono', monospace;
@@ -172,11 +163,21 @@
       white-space: nowrap;
     }
 
+    /* ── Loading / error state ── */
+    .load-state {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 72px 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
     .content { max-width: 920px; margin: 0 auto; }
 
-    .playlist-section { margin-bottom: 44px; }
-
-    .playlist-heading {
+    /* ── Section headings ── */
+    .section-heading {
       display: flex;
       align-items: center;
       gap: 9px;
@@ -189,7 +190,7 @@
       margin-bottom: 16px;
     }
 
-    .playlist-heading .dot {
+    .section-heading .dot {
       width: 5px;
       height: 5px;
       border-radius: 50%;
@@ -197,6 +198,16 @@
       flex-shrink: 0;
     }
 
+    /* Featured section gets a subtle border treatment */
+    .featured-section {
+      margin-bottom: 44px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .playlist-section { margin-bottom: 44px; }
+
+    /* ── Grid ── */
     .video-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -214,6 +225,7 @@
       .search-wrap { max-width: 100%; }
     }
 
+    /* ── Card ── */
     .video-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -223,12 +235,13 @@
       transition: border-color 0.15s, background 0.15s;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
-    .video-card:hover {
-      border-color: var(--accent);
-      background: var(--surface2);
-    }
+    .video-card:hover { border-color: var(--accent); background: var(--surface2); }
+
+    /* Pinned card indicator — small gold top border */
+    .video-card.is-pinned { border-top-color: var(--accent); }
 
     .thumbnail-wrap {
       position: relative;
@@ -267,17 +280,9 @@
       pointer-events: none;
     }
 
-    .video-card:hover .play-icon {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
+    .video-card:hover .play-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
-    .play-icon svg {
-      width: 16px;
-      height: 16px;
-      fill: var(--accent);
-      margin-left: 2px;
-    }
+    .play-icon svg { width: 16px; height: 16px; fill: var(--accent); margin-left: 2px; }
 
     .duration-badge {
       position: absolute;
@@ -330,18 +335,9 @@
       line-height: 1.4;
     }
 
-    .card-desc {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.45;
-    }
+    .card-desc { font-size: 12px; color: var(--muted); line-height: 1.45; }
 
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 2px;
-    }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
 
     .tag {
       font-family: 'IBM Plex Mono', monospace;
@@ -358,6 +354,7 @@
 
     .video-card:hover .tag { border-color: rgba(200, 168, 107, 0.25); }
 
+    /* ── Empty / error states ── */
     .empty-state {
       display: none;
       text-align: center;
@@ -367,6 +364,7 @@
       font-size: 13px;
     }
 
+    /* ── Modal ── */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -402,7 +400,6 @@
     }
 
     .modal-title-group { display: flex; flex-direction: column; gap: 3px; }
-
     .modal-eyebrow { display: flex; align-items: center; gap: 10px; }
 
     .modal-category {
@@ -459,7 +456,7 @@
       border: none;
     }
 
-    /* ── Belmont floating nav ── */
+    /* ── Floating nav ── */
     .belmont-nav { position: fixed; z-index: 200; top: 24px; left: 24px; }
 
     @media (max-width: 560px) {
@@ -565,7 +562,7 @@
     <nav class="belmont-nav-menu">
       <a class="belmont-nav-link" data-page="schedule" href="https://bradwintersmusic-cloud.github.io/studioassistant-sync/">
         <span class="belmont-nav-link-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" d="M2 4h20v18H2zm5-3v3m10-3v3M2 8h20M5 12.5h3m-3 5h3m2.5-5h3m2.5 0h3m-8.5 5h3" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" d="M2 4h20v18H2zm5-3v3m10-3v3M2 8h20M5 12.5h3m-3 5h3m2.5-5h3m2.5 0h3m-8.5 5h3"/></svg>
         </span>
         <span class="belmont-nav-link-label">Studio Schedule</span>
       </a>
@@ -611,6 +608,10 @@
         <option value="Troubleshooting">Troubleshooting</option>
       </select>
 
+      <select class="filter-select" id="classFilter">
+        <option value="">All Classes</option>
+      </select>
+
       <select class="filter-select" id="instructorFilter">
         <option value="">All Instructors</option>
       </select>
@@ -620,12 +621,13 @@
       </select>
 
       <button class="clear-btn" id="clearBtn">Clear Filters</button>
-
       <span class="result-count" id="resultCount"></span>
     </div>
   </header>
 
-  <main class="content" id="mainContent"></main>
+  <main class="content" id="mainContent">
+    <div class="load-state" id="loadState">Loading...</div>
+  </main>
   <div class="empty-state" id="emptyState">No videos match your filters.</div>
 
   <div class="modal-overlay" id="modalOverlay">
@@ -648,130 +650,123 @@
   </div>
 
   <script>
-    var videos = [
-      {
-        id: "l3wIEGadAFE",
-        category: "Booking",
-        title: "How to LOGIN to Studio Assistant",
-        desc: "Step-by-step walkthrough showing how to login using your email and how to set up a passkey for future logins.",
-        instructor: "Brad Winters",
-        playlist: "Studio Assistant Guides",
-        duration: "2:31",
-        tags: "booking, login, passkey, email"
-      },
-      {
-        id: "wXTvd1DkHFw",
-        category: "General",
-        title: "Tape Workflows",
-        desc: "In this episode of Soyuz Spotlights, we sit down with Michael Janas, Chair of Audio Engineering Technology at Belmont University, to discuss his analog recording curriculum. Students learn how to operate a tape machine, patch in analog outboard gear, and much more.",
-        instructor: "Michael Janas",
-        duration: "14:21",
-        tags: "tape, gear, recording, analog"
-      },
-      {
-        id: "gH_C2T-izRY",
-        category: "General",
-        title: "Curb College Facilities",
-        desc: "Artists. Filmmakers. Songwriters. Screenwriters. Journalists. Directors. Entertainers. Every creative professional needs a creative space for their craft.",
-        instructor: "Dave Warburton",
-        duration: "4:46",
-        tags: "cemb, aet, mot, tour"
-      },
-      {
-        id: "GSLbTROcC2s",
-        category: "General",
-        title: "Vintage King’s Inside Look At Belmont University's Johnson Theater",
-        desc: "Opened in 2015 as part of the Mike Curb College of Entertainment Music Business, Belmont University’s Johnson Theater is a 250-seat, multi-purpose space that serves the Motion Pictures, Media Studies and Audio Engineering departments. Acting as a full, theatrical-sized mix stage, the Johnson Theater was the first theater in the world equipped to mix in Dolby Atmos.",
-        instructor: "Dave Warburton",
-        duration: "6:38",
-        tags: "cemb, mot, tour"
-      },
-      {
-        id: "sQHEvbTn1qE",
-        category: "General",
-        title: "Vintage King’s Inside Look At Belmont University's Robert E. Mulloy Studios",
-        desc: "Located in the heart of Nashville’s Belmont University, Robert E. Mulloy Studios offers students a world-class studio space to learn the ropes and hone their craft. In our latest Inside Look, we spoke with Michael Janasto learn more about what goes on behind the scenes.",
-        instructor: "Michael Janas",
-        duration: "8:18",
-        tags: "rem, recording, ssl origin, gear, equipment"
-      },
-      {
-        id: "IAHd0ODkfjk",
-        category: "General",
-        title: "Welcome to the Mike Curb College of Entertainment & Music Business",
-        desc: "Curb College boasts an impressive faculty of academic scholars and authors, entrepreneurs, songwriters, producers, journalists, filmmakers, sound and recording engineers and entertainment executives. The college serves as a world leader in music business and entertainment industry education and is the only freestanding college of its kind.",
-        instructor: "Brittany Schaffer",
-        duration: "3:14",
-        tags: "cemb, aet, mot, sng, mbu, mds, tour"
-      }
-    ];
-
+    // ── STATE ─────────────────────────────────────────────────────────────────
+    var allVideos = [];
+    var pinnedPlaylistNames = {};
     var activeSearch = "";
     var activeCategory = "";
+    var activeClass = "";
     var activeInstructor = "";
     var activePlaylist = "";
 
-    var instructorSet = {};
-    var playlistSet = {};
-
-    for (var i = 0; i < videos.length; i++) {
-      var v = videos[i];
-      if (v.instructor && v.instructor !== "") { instructorSet[v.instructor] = true; }
-      if (v.playlist && v.playlist !== "") { playlistSet[v.playlist] = true; }
-    }
-
-    var instructorFilter = document.getElementById("instructorFilter");
-    var instructorKeys = Object.keys(instructorSet).sort();
-    for (var i = 0; i < instructorKeys.length; i++) {
-      var opt = document.createElement("option");
-      opt.value = instructorKeys[i];
-      opt.textContent = instructorKeys[i];
-      instructorFilter.appendChild(opt);
-    }
-
-    var playlistFilter = document.getElementById("playlistFilter");
-    var playlistKeys = Object.keys(playlistSet).sort();
-    for (var i = 0; i < playlistKeys.length; i++) {
-      var opt = document.createElement("option");
-      opt.value = playlistKeys[i];
-      opt.textContent = playlistKeys[i];
-      playlistFilter.appendChild(opt);
-    }
-
-    if (instructorKeys.length === 0) { instructorFilter.style.display = "none"; }
-    if (playlistKeys.length === 0) { playlistFilter.style.display = "none"; }
-
+    // ── ELEMENTS ──────────────────────────────────────────────────────────────
+    var mainContent = document.getElementById("mainContent");
+    var loadState = document.getElementById("loadState");
+    var emptyState = document.getElementById("emptyState");
+    var resultCount = document.getElementById("resultCount");
     var clearBtn = document.getElementById("clearBtn");
+    var searchInput = document.getElementById("searchInput");
+    var categoryFilterEl = document.getElementById("categoryFilter");
+    var classFilter = document.getElementById("classFilter");
+    var instructorFilter = document.getElementById("instructorFilter");
+    var playlistFilter = document.getElementById("playlistFilter");
 
-    function updateClearBtn() {
-      var hasFilters = activeSearch || activeCategory || activeInstructor || activePlaylist;
-      clearBtn.classList.toggle("visible", !!hasFilters);
+    // ── LOAD DATA ─────────────────────────────────────────────────────────────
+    // Cache-busting timestamp ensures sheet updates show quickly
+    var jsonUrl = "videos.json?v=" + Date.now();
+
+    fetch(jsonUrl)
+      .then(function(res) {
+        if (!res.ok) { throw new Error("HTTP " + res.status); }
+        return res.json();
+      })
+      .then(function(data) {
+        // Build pinned playlist lookup
+        var playlists = data.playlists || [];
+        for (var p = 0; p < playlists.length; p++) {
+          if (playlists[p].pinned) {
+            pinnedPlaylistNames[playlists[p].name] = true;
+          }
+        }
+
+        // Filter to active videos only (missing active field = true)
+        var raw = data.videos || [];
+        allVideos = [];
+        for (var i = 0; i < raw.length; i++) {
+          if (raw[i].active !== false) { allVideos.push(raw[i]); }
+        }
+
+        bootstrapDropdowns();
+        render();
+        loadState.style.display = "none";
+      })
+      .catch(function(err) {
+        loadState.textContent = "Could not load videos. (" + err.message + ")";
+      });
+
+    // ── BOOTSTRAP DROPDOWNS ───────────────────────────────────────────────────
+    function bootstrapDropdowns() {
+      var classSet = {};
+      var instructorSet = {};
+      var playlistSet = {};
+
+      for (var i = 0; i < allVideos.length; i++) {
+        var v = allVideos[i];
+        if (v.instructor && v.instructor !== "") { instructorSet[v.instructor] = true; }
+        if (v.playlist && v.playlist !== "") { playlistSet[v.playlist] = true; }
+        if (v.classes && v.classes.length) {
+          for (var c = 0; c < v.classes.length; c++) {
+            if (v.classes[c]) { classSet[v.classes[c]] = true; }
+          }
+        }
+      }
+
+      var classKeys = Object.keys(classSet).sort();
+      for (var i = 0; i < classKeys.length; i++) {
+        var opt = document.createElement("option");
+        opt.value = classKeys[i];
+        opt.textContent = classKeys[i];
+        classFilter.appendChild(opt);
+      }
+
+      var instructorKeys = Object.keys(instructorSet).sort();
+      for (var i = 0; i < instructorKeys.length; i++) {
+        var opt = document.createElement("option");
+        opt.value = instructorKeys[i];
+        opt.textContent = instructorKeys[i];
+        instructorFilter.appendChild(opt);
+      }
+
+      var playlistKeys = Object.keys(playlistSet).sort();
+      for (var i = 0; i < playlistKeys.length; i++) {
+        var opt = document.createElement("option");
+        opt.value = playlistKeys[i];
+        opt.textContent = playlistKeys[i];
+        playlistFilter.appendChild(opt);
+      }
+
+      if (classKeys.length === 0) { classFilter.style.display = "none"; }
+      if (instructorKeys.length === 0) { instructorFilter.style.display = "none"; }
+      if (playlistKeys.length === 0) { playlistFilter.style.display = "none"; }
     }
 
-    function clearFilters() {
-      activeSearch = "";
-      activeCategory = "";
-      activeInstructor = "";
-      activePlaylist = "";
-
-      document.getElementById("searchInput").value = "";
-      document.getElementById("categoryFilter").value = "";
-      document.getElementById("categoryFilter").className = "filter-select";
-      instructorFilter.value = "";
-      instructorFilter.className = "filter-select";
-      playlistFilter.value = "";
-      playlistFilter.className = "filter-select";
-
-      updateClearBtn();
-      render();
+    // ── FILTER LOGIC ──────────────────────────────────────────────────────────
+    function isFiltered() {
+      return activeSearch || activeCategory || activeClass || activeInstructor || activePlaylist;
     }
-
-    clearBtn.addEventListener("click", clearFilters);
 
     function matchesFilters(v) {
       if (activeCategory && v.category !== activeCategory) { return false; }
       if (activeInstructor && v.instructor !== activeInstructor) { return false; }
       if (activePlaylist && v.playlist !== activePlaylist) { return false; }
+      if (activeClass) {
+        var classes = v.classes || [];
+        var found = false;
+        for (var c = 0; c < classes.length; c++) {
+          if (classes[c] === activeClass) { found = true; break; }
+        }
+        if (!found) { return false; }
+      }
       if (activeSearch) {
         var q = activeSearch.toLowerCase();
         var inTitle = v.title.toLowerCase().indexOf(q) !== -1;
@@ -782,15 +777,14 @@
       return true;
     }
 
-    var mainContent = document.getElementById("mainContent");
-    var emptyState = document.getElementById("emptyState");
-    var resultCount = document.getElementById("resultCount");
-
+    // ── RENDER ────────────────────────────────────────────────────────────────
     function render() {
       mainContent.innerHTML = "";
+      emptyState.style.display = "none";
+
       var filtered = [];
-      for (var i = 0; i < videos.length; i++) {
-        if (matchesFilters(videos[i])) { filtered.push(videos[i]); }
+      for (var i = 0; i < allVideos.length; i++) {
+        if (matchesFilters(allVideos[i])) { filtered.push(allVideos[i]); }
       }
 
       resultCount.textContent = filtered.length + " video" + (filtered.length !== 1 ? "s" : "");
@@ -799,41 +793,74 @@
         emptyState.style.display = "block";
         return;
       }
-      emptyState.style.display = "none";
 
-      if (!activePlaylist) {
-        var groups = {};
-        var noPlaylist = [];
+      var filtersActive = !!isFiltered();
 
-        for (var i = 0; i < filtered.length; i++) {
-          var v = filtered[i];
-          if (v.playlist && v.playlist !== "") {
-            if (!groups[v.playlist]) { groups[v.playlist] = []; }
-            groups[v.playlist].push(v);
+      if (filtersActive) {
+        // When filters are active: flat grid, no featured/playlist grouping
+        renderSection("", filtered, false);
+        return;
+      }
+
+      // ── Default (no filters): Featured → pinned playlists → other playlists → unassigned ──
+
+      // Separate pinned individual videos
+      var pinnedVideos = [];
+      var rest = [];
+      for (var i = 0; i < filtered.length; i++) {
+        if (filtered[i].pinned) { pinnedVideos.push(filtered[i]); }
+        else { rest.push(filtered[i]); }
+      }
+
+      // Featured section (pinned individual videos)
+      if (pinnedVideos.length > 0) {
+        renderSection("Featured", pinnedVideos, true);
+      }
+
+      // Group remaining videos by playlist
+      var pinnedPlaylistGroups = {};   // pinned playlists
+      var normalPlaylistGroups = {};   // non-pinned playlists
+      var noPlaylist = [];
+
+      for (var i = 0; i < rest.length; i++) {
+        var v = rest[i];
+        if (v.playlist && v.playlist !== "") {
+          if (pinnedPlaylistNames[v.playlist]) {
+            if (!pinnedPlaylistGroups[v.playlist]) { pinnedPlaylistGroups[v.playlist] = []; }
+            pinnedPlaylistGroups[v.playlist].push(v);
           } else {
-            noPlaylist.push(v);
+            if (!normalPlaylistGroups[v.playlist]) { normalPlaylistGroups[v.playlist] = []; }
+            normalPlaylistGroups[v.playlist].push(v);
           }
+        } else {
+          noPlaylist.push(v);
         }
+      }
 
-        var groupNames = Object.keys(groups).sort();
-        for (var g = 0; g < groupNames.length; g++) {
-          renderSection(groupNames[g], groups[groupNames[g]]);
-        }
-        if (noPlaylist.length > 0) {
-          renderSection(groupNames.length > 0 ? "General" : "", noPlaylist);
-        }
-      } else {
-        renderSection("", filtered);
+      // Render pinned playlists first, then normal playlists, then unassigned
+      var pinnedNames = Object.keys(pinnedPlaylistGroups).sort();
+      for (var g = 0; g < pinnedNames.length; g++) {
+        renderSection(pinnedNames[g], pinnedPlaylistGroups[pinnedNames[g]], false);
+      }
+
+      var normalNames = Object.keys(normalPlaylistGroups).sort();
+      for (var g = 0; g < normalNames.length; g++) {
+        renderSection(normalNames[g], normalPlaylistGroups[normalNames[g]], false);
+      }
+
+      if (noPlaylist.length > 0) {
+        var label = (pinnedNames.length + normalNames.length > 0) ? "General" : "";
+        renderSection(label, noPlaylist, false);
       }
     }
 
-    function renderSection(label, videoList) {
+    function renderSection(label, videoList, isFeatured) {
       var section = document.createElement("div");
-      section.className = "playlist-section";
+      section.className = isFeatured ? "featured-section" : "playlist-section";
 
       if (label) {
         var heading = document.createElement("div");
-        heading.className = "playlist-heading";
+        heading.className = "section-heading";
         heading.innerHTML = '<div class="dot"></div>' + label;
         section.appendChild(heading);
       }
@@ -852,7 +879,7 @@
     function buildCard(v) {
       var thumb = "https://img.youtube.com/vi/" + v.id + "/mqdefault.jpg";
       var card = document.createElement("div");
-      card.className = "video-card";
+      card.className = "video-card" + (v.pinned ? " is-pinned" : "");
 
       var instructorHtml = (v.instructor && v.instructor !== "")
         ? '<span class="card-instructor">' + v.instructor + '</span>' : "";
@@ -895,6 +922,68 @@
       return card;
     }
 
+    // ── CLEAR FILTERS ─────────────────────────────────────────────────────────
+    function updateClearBtn() {
+      clearBtn.classList.toggle("visible", !!isFiltered());
+    }
+
+    function clearFilters() {
+      activeSearch = "";
+      activeCategory = "";
+      activeClass = "";
+      activeInstructor = "";
+      activePlaylist = "";
+      searchInput.value = "";
+      categoryFilterEl.value = "";
+      categoryFilterEl.className = "filter-select";
+      classFilter.value = "";
+      classFilter.className = "filter-select";
+      instructorFilter.value = "";
+      instructorFilter.className = "filter-select";
+      playlistFilter.value = "";
+      playlistFilter.className = "filter-select";
+      updateClearBtn();
+      render();
+    }
+
+    clearBtn.addEventListener("click", clearFilters);
+
+    // ── CONTROL EVENTS ────────────────────────────────────────────────────────
+    searchInput.addEventListener("input", function() {
+      activeSearch = this.value.trim();
+      updateClearBtn();
+      render();
+    });
+
+    categoryFilterEl.addEventListener("change", function() {
+      activeCategory = this.value;
+      this.className = "filter-select" + (this.value ? " active" : "");
+      updateClearBtn();
+      render();
+    });
+
+    classFilter.addEventListener("change", function() {
+      activeClass = this.value;
+      this.className = "filter-select" + (this.value ? " active" : "");
+      updateClearBtn();
+      render();
+    });
+
+    instructorFilter.addEventListener("change", function() {
+      activeInstructor = this.value;
+      this.className = "filter-select" + (this.value ? " active" : "");
+      updateClearBtn();
+      render();
+    });
+
+    playlistFilter.addEventListener("change", function() {
+      activePlaylist = this.value;
+      this.className = "filter-select" + (this.value ? " active" : "");
+      updateClearBtn();
+      render();
+    });
+
+    // ── MODAL ─────────────────────────────────────────────────────────────────
     var overlay = document.getElementById("modalOverlay");
     var iframe = document.getElementById("modalIframe");
     var modalCat = document.getElementById("modalCategory");
@@ -923,37 +1012,7 @@
     overlay.addEventListener("click", function(e) { if (e.target === overlay) { closeModal(); } });
     document.addEventListener("keydown", function(e) { if (e.key === "Escape") { closeModal(); } });
 
-    var searchInput = document.getElementById("searchInput");
-    var categoryFilterEl = document.getElementById("categoryFilter");
-
-    searchInput.addEventListener("input", function() {
-      activeSearch = this.value.trim();
-      updateClearBtn();
-      render();
-    });
-
-    categoryFilterEl.addEventListener("change", function() {
-      activeCategory = this.value;
-      this.className = "filter-select" + (this.value ? " active" : "");
-      updateClearBtn();
-      render();
-    });
-
-    instructorFilter.addEventListener("change", function() {
-      activeInstructor = this.value;
-      this.className = "filter-select" + (this.value ? " active" : "");
-      updateClearBtn();
-      render();
-    });
-
-    playlistFilter.addEventListener("change", function() {
-      activePlaylist = this.value;
-      this.className = "filter-select" + (this.value ? " active" : "");
-      updateClearBtn();
-      render();
-    });
-
-    // Nav script
+    // ── NAV ───────────────────────────────────────────────────────────────────
     (function() {
       var nav = document.getElementById("belmontNav");
       var toggle = document.getElementById("belmontNavToggle");
@@ -980,8 +1039,6 @@
         }
       });
     })();
-
-    render();
   </script>
 
 </body>
